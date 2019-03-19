@@ -1,0 +1,8 @@
+---
+# vars file for docker4wordpress
+
+docker_install_compose: false
+
+pip_install_packages:
+  - docker
+  - docker-compose==1.24.0rc1

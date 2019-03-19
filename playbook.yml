@@ -1,0 +1,10 @@
+---
+# Used for testing docker4wordpress role locally
+
+- hosts: all
+
+  become: yes
+  become_user: root
+
+  roles:
+    - ../ansible-role-docker4wordpress

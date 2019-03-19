@@ -1,0 +1,34 @@
+---
+# defaults file for docker4wordpress
+
+description: example
+
+docker4wordpress:
+  repo: https://github.com/wodby/docker4wordpress.git
+  version: 5.4.3
+
+project:
+  name: example
+  base_url: example.com
+  path: /docker/d4w.example.com
+
+mariadb:
+  db_name: wordpress
+  user: wordpress
+  password: wordpress
+  root_password: password
+  host: mariadb
+  version: 10.1-3.4.2
+
+php:
+  version: 7.2-dev-4.12.5
+
+nginx:
+  version: 1.15-5.3.5
+
+wordpress:
+  version: 5-4.14.0
+
+traefik:
+  http_port: 80
+  https_port: 443

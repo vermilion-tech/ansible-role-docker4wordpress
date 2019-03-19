@@ -1,0 +1,29 @@
+---
+# tasks file for docker4wordpress
+
+- name: Clone docker4wordpress repository
+  git:
+    repo: "{{ docker4wordpress.repo }}"
+    dest: "{{ project.path }}"
+    version: "{{ docker4wordpress.version }}"
+    update: no
+
+- name: Create .env from template
+  template:
+    src: .env.j2
+    dest: "{{ project.path }}/.env"
+    owner: root
+    group: root
+    mode: 600
+
+- name: Create docker-compose.override.yml from template
+  template:
+    src: docker-compose.override.yml.j2
+    dest: "{{ project.path }}/docker-compose.override.yml"
+    owner: root
+    group: root
+
+- name: Startup docker4wordpress service
+  docker_service:
+    project_src: "{{ project.path }}"
+    state: present

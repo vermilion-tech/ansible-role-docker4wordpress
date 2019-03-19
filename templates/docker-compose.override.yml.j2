@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  php:
+    image: wodby/wordpress:$WORDPRESS_TAG
+    environment:
+      PHP_FPM_CLEAR_ENV: "no"
+    volumes:
+      - codebase:/var/www/html
+
+  nginx:
+    volumes:
+      - codebase:/var/www/html
+
+  traefik:
+    ports:
+      - '{{ traefik.http_port }}:80'
+      - '{{ traefik.https_port}}:443'
+volumes:
+  codebase:
