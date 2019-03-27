@@ -1,5 +1,8 @@
 ---
 # tasks file for docker4wordpress
+- name: Debug Mariadb
+  debug:
+    msg: "{{ mariadb }}"
 
 - name: Stop docker4wordpress services
   docker_service:
@@ -38,10 +41,6 @@
     project_src: "{{ project.path }}"
     state: present
     services: "{{ startup_services }}"
-
-- name: Debug Mariadb
-  debug:
-    msg: "{{ mariadb }}"
 
 - name: Import Database Backup
   block:
