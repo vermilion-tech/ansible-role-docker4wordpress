@@ -1,0 +1,40 @@
+pipeline {
+  agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
+
+  environment {
+    COMMIT_MESSAGE = """${sh(
+      returnStdout: true,
+      script: "git --no-pager log --format='medium' -1 ${GIT_COMMIT}"
+    )}"""
+  }
+
+  stages {
+    stage('Notify Slack') {
+      steps {
+        slackSend(color: '#000000', message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)\n```${env.COMMIT_MESSAGE}```")
+      }
+    }
+
+    stage('Import Ansible Role') {
+      steps {
+        withCredentials([string(credentialsId: "ansible-galaxy-pat", variable: "GITHUB_PAT")]) {
+          sh 'ansible-galaxy login --github-token $GITHUB_PAT'
+          script {
+            IMPORT_STATUS = sh(script: "ansible-galaxy import vermilion-tech ansible-role-docker4wordpress", returnStdout: true)
+          }
+        }
+        slackSend(color: '#d577dd', message: "Ansible-Galaxy Role Imported\n```${IMPORT_STATUS}```")
+      }
+    }
+  }
+
+  post {
+    failure {
+      slackSend (color: '#FF0000', message: "Build Failed! - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+    }
+
+    success {
+      slackSend (color: '#00FF00', message: "Success! - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+    }
+  }
+}
