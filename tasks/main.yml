@@ -1,8 +1,5 @@
 ---
 # tasks file for docker4wordpress
-- name: Debug Mariadb
-  debug:
-    msg: "{{ mariadb }}"
 
 - name: Stop docker4wordpress services
   docker_service:
@@ -36,11 +33,19 @@
   docker_network:
     name: "{{ traefik.network }}"
 
+- name: Copy mariadb values to another fact
+  set_fact:
+    maridb_cfg: "{{ mariadb }}"
+
 - name: Startup docker4wordpress services
   docker_service:
     project_src: "{{ project.path }}"
     state: present
     services: "{{ startup_services }}"
+
+- name: Debug Mariadb
+  debug:
+    msg: "{{ maridb_cfg }}"
 
 - name: Import Database Backup
   block:
