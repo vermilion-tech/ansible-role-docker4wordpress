@@ -49,7 +49,7 @@
         bucket: "{{ space_name }}"
 
         object: "{{ space_file_path }}"
-        src: "{{ mysqldump_file_path }}"
+        dest: "{{ mysqldump_file_path }}"
 
         encrypt: false
         rgw: true
