@@ -13,6 +13,7 @@ project:
   path: /docker/d4w.example.com
 
 mariadb:
+  service_name: mariadb
   db_name: wordpress
   user: wordpress
   password: wordpress
@@ -38,3 +39,15 @@ startup_services:
   - php
   - mariadb
   - nginx
+
+#mysqldump_file_name: "example.mysqldump"
+mysqldump_file_path: /tmp/{{ mysqldump_file_name }}
+
+space_name: example-space-name
+space_region: sfo2
+spaces_endpoint: https://{{ space_region }}.digitaloceanspaces.com
+spaces_secret_key: access_key
+spaces_access_key: access_key
+
+space_folder: /backups
+space_file_path: "{{ space_folder }}/{{ mysqldump_file_name}}"

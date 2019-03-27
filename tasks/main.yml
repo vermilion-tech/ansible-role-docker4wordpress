@@ -38,3 +38,30 @@
     project_src: "{{ project.path }}"
     state: present
     services: "{{ startup_services }}"
+
+- name: Import Database Backup
+  block:
+    - name: Download Backup from S3
+      aws_s3:
+        aws_access_key: "{{ spaces_access_key }}"
+        aws_secret_key: "{{ spaces_secret_key }}"
+        s3_url: "{{ spaces_endpoint }}"
+        bucket: "{{ space_name }}"
+
+        object: "{{ space_file_path }}"
+        src: "{{ mysqldump_file_path }}"
+
+        encrypt: false
+        rgw: true
+        mode: get
+
+    - name: Use docker compose to generate a mysqldump on the database service
+      shell: docker-compose exec -T {{ mariadb.service_name }} mysql -u {{ mariadb.user }} -p{{ mariadb.password }} {{ mariadb.db_name }} < {{ mysqldump_file_path }}
+      args:
+        chdir: "{{ project.path }}"
+  always:
+    - name: Delete Temporary Backup
+      file:
+        path: "{{ mysqldump_file_path }}"
+        state: absent
+  when: mysqldump_file_name is defined
