@@ -1,5 +1,5 @@
 pipeline {
-  agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
+  agent any
 
   environment {
     COMMIT_MESSAGE = """${sh(
@@ -16,6 +16,7 @@ pipeline {
     }
 
     stage('Import Ansible Role') {
+      agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
       steps {
         withCredentials([string(credentialsId: "ansible-galaxy-pat", variable: "GITHUB_PAT")]) {
           sh 'ansible-galaxy login --github-token $GITHUB_PAT'
