@@ -59,7 +59,7 @@
         rgw: true
         mode: get
 
-    - name: Wait 30 seconds for Mariadb to become initialize.
+    - name: Wait 30 seconds for Mariadb to initialize.
       pause:
         seconds: 30
 
