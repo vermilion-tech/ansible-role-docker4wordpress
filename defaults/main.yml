@@ -30,6 +30,7 @@ wordpress:
   version: 5-4.14.0
 
 traefik:
+  network: traefik
   http_port: 80
   https_port: 443
 

@@ -57,6 +57,7 @@ galaxy_info:
 dependencies:
   - geerlingguy.docker
   - geerlingguy.pip
+  - vermilion_tech.ansible_role_docker_traefik
 
   # List your role dependencies here, one per line. Be sure to remove the '[]' above,
   # if you add dependencies to this list.

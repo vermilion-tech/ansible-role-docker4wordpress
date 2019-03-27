@@ -12,9 +12,20 @@ services:
     volumes:
       - codebase:/var/www/html
 
+    networks:
+      - {{ traefik.network }}
+
   traefik:
+    networks:
+      - {{ traefik.network }}
+
     ports:
       - '{{ traefik.http_port }}:80'
       - '{{ traefik.https_port}}:443'
 volumes:
   codebase:
+
+networks:
+  {{ traefik.network }}
+    external:
+      name: {{ traefik.network }}

@@ -29,6 +29,10 @@
     owner: root
     group: root
 
+- name: Create Traefik network
+  docker_network:
+    name: "{{ traefik.network }}"
+
 - name: Startup docker4wordpress services
   docker_service:
     project_src: "{{ project.path }}"
