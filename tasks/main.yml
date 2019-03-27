@@ -1,6 +1,11 @@
 ---
 # tasks file for docker4wordpress
 
+- name: Stop docker4wordpress services
+  docker_service:
+    project_src: "{{ project.path }}"
+    state: absent
+
 - name: Clone docker4wordpress repository
   git:
     repo: "{{ docker4wordpress.repo }}"
@@ -23,7 +28,7 @@
     owner: root
     group: root
 
-- name: Startup docker4wordpress service
+- name: Startup docker4wordpress services
   docker_service:
     project_src: "{{ project.path }}"
     state: present
