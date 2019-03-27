@@ -26,6 +26,6 @@ volumes:
   codebase:
 
 networks:
-  {{ traefik.network }}
+  {{ traefik.network }}:
     external:
       name: {{ traefik.network }}
