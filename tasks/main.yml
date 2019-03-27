@@ -33,7 +33,7 @@
   docker_network:
     name: "{{ traefik.network }}"
 
-- name: Copy mariadb values to another fact
+- name: Copy mariadb variable to mariadb_cfg variable
   set_fact:
     maridb_cfg: "{{ mariadb }}"
 
@@ -42,10 +42,6 @@
     project_src: "{{ project.path }}"
     state: present
     services: "{{ startup_services }}"
-
-- name: Debug Mariadb
-  debug:
-    msg: "{{ maridb_cfg }}"
 
 - name: Import Database Backup
   block:
@@ -64,7 +60,7 @@
         mode: get
 
     - name: Use docker compose to import a mysqldump on the database service
-      shell: docker-compose exec -T {{ mariadb.service_name }} mysql -u {{ mariadb.user }} -p{{ mariadb.password }} {{ mariadb.db_name }} < {{ mysqldump_file_path }}
+      shell: docker-compose exec -T {{ mariadb_cfg.service_name }} mysql -u {{ mariadb_cfg.user }} -p{{ mariadb_cfg.password }} {{ mariadb_cfg.db_name }} < {{ mysqldump_file_path }}
       args:
         chdir: "{{ project.path }}"
   always:
