@@ -55,8 +55,8 @@
         rgw: true
         mode: get
 
-    - name: Use docker compose to generate a mysqldump on the database service
-      shell: docker-compose exec -T {{ mariadb.service_name }} mysql -u {{ mariadb.user }} -p{{ mariadb.password }} {{ mariadb.db_name }} < {{ mysqldump_file_path }}
+    - name: Use docker compose to import a mysqldump on the database service
+      shell: docker-compose exec -T mariadb mysql -u {{ mariadb.user }} -p{{ mariadb.password }} {{ mariadb.db_name }} < {{ mysqldump_file_path }}
       args:
         chdir: "{{ project.path }}"
   always:
