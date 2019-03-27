@@ -5,6 +5,7 @@
   docker_service:
     project_src: "{{ project.path }}"
     state: absent
+    ignore_errors: yes
 
 - name: Clone docker4wordpress repository
   git:
