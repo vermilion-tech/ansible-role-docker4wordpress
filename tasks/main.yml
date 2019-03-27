@@ -35,7 +35,7 @@
 
 - name: Copy mariadb variable to mariadb_cfg variable
   set_fact:
-    maridb_cfg: "{{ mariadb }}"
+    mariadb_cfg: "{{ mariadb }}"
 
 - name: Startup docker4wordpress services
   docker_service:
