@@ -27,3 +27,4 @@
   docker_service:
     project_src: "{{ project.path }}"
     state: present
+    services: "{{ startup_services }}"

@@ -32,3 +32,8 @@ wordpress:
 traefik:
   http_port: 80
   https_port: 443
+
+startup_services:
+  - php
+  - mariadb
+  - nginx
