@@ -9,13 +9,16 @@ services:
       - codebase:/var/www/html
 
     networks:
-      - {{ traefik.network }}
+      - default
 
   nginx:
     volumes:
       - codebase:/var/www/html
     networks:
+      - default
       - {{ traefik.network }}
+    labels:
+      - 'traefik.enable=true'
 
   traefik:
     networks:
@@ -28,6 +31,7 @@ volumes:
   codebase:
 
 networks:
+  default:
   {{ traefik.network }}:
     external:
       name: {{ traefik.network }}
