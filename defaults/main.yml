@@ -40,7 +40,6 @@ startup_services:
   - mariadb
   - nginx
 
-#mysqldump_file_name: "example.mysqldump"
 mysqldump_file_path: /tmp/{{ mysqldump_file_name }}
 
 space_name: example-space-name
