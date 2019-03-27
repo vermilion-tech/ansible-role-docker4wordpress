@@ -59,6 +59,10 @@
         rgw: true
         mode: get
 
+    - name: Wait 30 seconds for Mariadb to become initialize.
+      pause:
+        seconds: 30
+
     - name: Use docker compose to import a mysqldump on the database service
       shell: docker-compose exec -T {{ mariadb_cfg.service_name }} mysql -u {{ mariadb_cfg.user }} -p{{ mariadb_cfg.password }} {{ mariadb_cfg.db_name }} < {{ mysqldump_file_path }}
       args:
