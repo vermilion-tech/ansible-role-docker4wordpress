@@ -39,6 +39,10 @@
     state: present
     services: "{{ startup_services }}"
 
+- name: Debug Mariadb
+  debug:
+    msg: "{{ mariadb }}"
+
 - name: Import Database Backup
   block:
     - name: Download Backup from S3
