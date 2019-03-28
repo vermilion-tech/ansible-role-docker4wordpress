@@ -3,8 +3,8 @@
 
 description: example
 
+codebase_import: false
 codebase:
-  import: false
   repo: https://github.com/wodby/wordpress-composer.git
   version: master
 
@@ -17,8 +17,8 @@ project:
   base_url: example.com
   path: /docker/d4w.example.com
 
+mariadb_import: false
 mariadb:
-  import: false
   service_name: mariadb
   db_name: wordpress
   user: wordpress

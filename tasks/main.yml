@@ -49,11 +49,11 @@
 
 - name: Import Codebase
   import_tasks: codebaseimport.yml
-  when: codebase.import
+  when: codebase_import
 
 - name: Import Database Backup
   import_tasks: dbimport.yml
-  when: mariadb.import
+  when: mariadb_import
 
 - name: Create WP Config
   import_tasks: createwpconfig.yml
