@@ -17,5 +17,7 @@
 
 - name: Set Home & Site URLs
   shell: |
+    docker-compose exec \
+    -T php \
     wp config set WP_HOME {{ project_base_url }} &&\
     wp config set WP_SITEURL {{ project_base_url }}
