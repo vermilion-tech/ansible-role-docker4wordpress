@@ -12,3 +12,4 @@
       --dbhost={{ mariadb_service_name }}
   args:
     chdir: "{{ project_path }}"
+  ignore_errors: true
