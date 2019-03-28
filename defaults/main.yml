@@ -4,6 +4,8 @@
 description: example
 
 codebase_import: false
+codebase_volume_path: ./codebase:/var/www/html
+
 codebase:
   repo: https://github.com/wodby/wordpress-composer.git
   version: master
