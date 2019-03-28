@@ -5,6 +5,6 @@
   git:
     repo: "{{ codebase.repo }}"
     dest: "{{ project.path }}/codebase"
-    version: "{{ cobebase.version }}"
+    version: "{{ codebase.version }}"
     update: no
   when: codebase.repo is defined
