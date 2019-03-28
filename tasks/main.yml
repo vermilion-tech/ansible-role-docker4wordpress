@@ -49,4 +49,4 @@
 
 - name: Import Database Backup
   import_tasks: dbimport.yml
-  when: mysqldump_file_name != ''
+  when: mariadb.import

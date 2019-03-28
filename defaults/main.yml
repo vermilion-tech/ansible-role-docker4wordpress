@@ -18,6 +18,7 @@ project:
   path: /docker/d4w.example.com
 
 mariadb:
+  import: false
   service_name: mariadb
   db_name: wordpress
   user: wordpress
