@@ -14,10 +14,6 @@
     version: "{{ docker4wordpress.version }}"
     update: no
 
-- name: Debug MariaDB
-  debug:
-    msg: "{{ mariadb }}"
-
 - name: Create .env from template
   template:
     src: .env.j2
