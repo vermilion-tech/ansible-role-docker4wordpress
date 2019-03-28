@@ -26,7 +26,7 @@ docker4wordpress_version: 5.4.3
 
 project_name: example
 project_base_url: example.com
-project_path: /docker/d4w.example.com
+project_path: /docker/{{ project_base_url }}
 
 startup_services:
   - php
