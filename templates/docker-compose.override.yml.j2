@@ -17,6 +17,8 @@ services:
       - {{ traefik.network }}
     labels:
       - 'traefik.enable=true'
+    environment:
+     NGINX_SERVER_ROOT: /var/www/html/www
 
   traefik:
     networks:
