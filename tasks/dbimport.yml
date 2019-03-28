@@ -24,14 +24,14 @@
     - name: Use docker compose to import a mysqldump on the database service
       shell: |
         docker-compose exec \
-          -T {{ mariadb_cfg.service_name }} \
+          -T {{ mariadb_service_name }} \
           mysql \
           -u root \
-          -p{{ mariadb_cfg.root_password }} \
-          {{ mariadb_cfg.db_name }} \
+          -p{{ mariadb_root_password }} \
+          {{ mariadb_db_name }} \
           < {{ mysqldump_file_path }}
       args:
-        chdir: "{{ project.path }}"
+        chdir: "{{ project_path }}"
   always:
     - name: Delete Temporary Backup
       file:

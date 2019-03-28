@@ -14,7 +14,7 @@ services:
       - {{ codebase_volume_path }}
     networks:
       - default
-      - {{ traefik.network }}
+      - {{ traefik_network }}
     labels:
       - 'traefik.enable=true'
     environment:
@@ -22,16 +22,16 @@ services:
 
   traefik:
     networks:
-      - {{ traefik.network }}
+      - {{ traefik_network }}
     ports:
-      - '{{ traefik.http_port }}:80'
-      - '{{ traefik.https_port}}:443'
+      - '{{ traefik_http_port }}:80'
+      - '{{ traefik_https_port}}:443'
 
 volumes:
   codebase:
 
 networks:
   default:
-  {{ traefik.network }}:
+  {{ traefik_network }}:
     external:
-      name: {{ traefik.network }}
+      name: {{ traefik_network }}

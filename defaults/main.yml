@@ -1,62 +1,49 @@
 ---
-# defaults file for docker4wordpress
+# Default variables for docker4wordpress
 
-description: example
-
+# Settings to import codebase
 codebase_import: false
 codebase_volume_path: ./codebase:/var/www/html
+codebase_repo: https://github.com/wodby/wordpress-composer.git
+codebase_version: master
 
-codebase:
-  repo: https://github.com/wodby/wordpress-composer.git
-  version: master
-
-docker4wordpress:
-  repo: https://github.com/wodby/docker4wordpress.git
-  version: 5.4.3
-
-project:
-  name: example
-  base_url: example.com
-  path: /docker/d4w.example.com
-
+# Settings to import database
 mariadb_import: false
-mariadb:
-  service_name: mariadb
-  db_name: wordpress
-  user: wordpress
-  password: wordpress
-  root_password: password
-  host: mariadb
-  version: 10.1-3.4.2
 
-php:
-  version: 7.2-dev-4.12.5
+space_name: example-space-name
+space_region: sfo2
+space_folder: /backups
+spaces_secret_key: access_key
+spaces_access_key: access_key
+space_file_path: "{{ space_folder }}/{{ mysqldump_file_name}}"
+spaces_endpoint: https://{{ space_region }}.digitaloceanspaces.com
+mysqldump_file_name: example.sql
+mysqldump_file_path: /tmp/{{ mysqldump_file_name }}
 
-nginx:
-  version: 1.15-5.3.5
+# Settings to run docker4wordpress
+docker4wordpress_repo: https://github.com/wodby/docker4wordpress.git
+docker4wordpress_version: 5.4.3
 
-wordpress:
-  image: wodby/wordpress
-  version: 5-4.14.0
-
-traefik:
-  network: traefik
-  http_port: 80
-  https_port: 443
+project_name: example
+project_base_url: example.com
+project_path: /docker/d4w.example.com
 
 startup_services:
   - php
   - mariadb
   - nginx
 
-mysqldump_file_name:
-mysqldump_file_path: /tmp/{{ mysqldump_file_name }}
+php_version: 7.2-dev-4.12.5
+nginx_version: 1.15-5.3.5
+wordpress_version: 5-4.14.0
 
-space_name: example-space-name
-space_region: sfo2
-spaces_endpoint: https://{{ space_region }}.digitaloceanspaces.com
-spaces_secret_key: access_key
-spaces_access_key: access_key
+mariadb_service_name: mariadb
+mariadb_db_name: wordpress
+mariadb_user: wordpress
+mariadb_password: wordpress
+mariadb_root_password: password
+mariadb_version: 10.1-3.4.2
 
-space_folder: /backups
-space_file_path: "{{ space_folder }}/{{ mysqldump_file_name}}"
+traefik_network: traefik
+traefik_http_port: 80
+traefik_https_port: 443

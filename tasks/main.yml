@@ -3,21 +3,21 @@
 
 - name: Stop docker4wordpress services
   docker_service:
-    project_src: "{{ project.path }}"
+    project_src: "{{ project_path }}"
     state: absent
   ignore_errors: yes
 
 - name: Clone docker4wordpress repository
   git:
-    repo: "{{ docker4wordpress.repo }}"
-    dest: "{{ project.path }}"
-    version: "{{ docker4wordpress.version }}"
+    repo: "{{ docker4wordpress_repo }}"
+    dest: "{{ project_path }}"
+    version: "{{ docker4wordpress_version }}"
     update: no
 
 - name: Create .env from template
   template:
     src: .env.j2
-    dest: "{{ project.path }}/.env"
+    dest: "{{ project_path }}/.env"
     owner: root
     group: root
     mode: 0600
@@ -25,13 +25,13 @@
 - name: Create docker-compose.override.yml from template
   template:
     src: docker-compose.override.yml.j2
-    dest: "{{ project.path }}/docker-compose.override.yml"
+    dest: "{{ project_path }}/docker-compose.override.yml"
     owner: root
     group: root
 
 - name: Create Traefik network
   docker_network:
-    name: "{{ traefik.network }}"
+    name: "{{ traefik_network }}"
 
 - name: Copy mariadb variable to mariadb_cfg variable
   set_fact:
@@ -39,7 +39,7 @@
 
 - name: Startup docker4wordpress services
   docker_service:
-    project_src: "{{ project.path }}"
+    project_src: "{{ project_path }}"
     state: present
     services: "{{ startup_services }}"
 

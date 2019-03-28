@@ -6,9 +6,9 @@
     docker-compose exec \
     -T php \
     wp config create \
-      --dbname={{ mariadb_cfg.db_name }} \
-      --dbuser={{ mariadb_cfg.user }} \
-      --dbpass={{ mariadb_cfg.password }} \
-      --dbhost={{ mariadb_cfg.host }}
+      --dbname={{ mariadb_db_name }} \
+      --dbuser={{ mariadb_user }} \
+      --dbpass={{ mariadb_password }} \
+      --dbhost={{ mariadb_service_name }}
   args:
-    chdir: "{{ project.path }}"
+    chdir: "{{ project_path }}"
