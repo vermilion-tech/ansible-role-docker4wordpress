@@ -16,7 +16,7 @@
 
 - name: Import Codebase
   import_tasks: codebaseimport.yml
-  when: codebase.repo != ''
+  when: codebase.import
 
 - name: Create .env from template
   template:

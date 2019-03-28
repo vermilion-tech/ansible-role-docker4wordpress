@@ -4,8 +4,9 @@
 description: example
 
 codebase:
-  repo:
-  version:
+  import: false
+  repo: https://github.com/wodby/wordpress-composer.git
+  version: master
 
 docker4wordpress:
   repo: https://github.com/wodby/docker4wordpress.git
