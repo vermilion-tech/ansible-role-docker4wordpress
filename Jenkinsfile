@@ -22,7 +22,7 @@ pipeline {
         script {
           LINT_OUTPUT = sh(script: "ansible-lint . || true", returnStdout: true)
         }
-        slackSend(color: '#e987f1', message: "Ansible Lint\n```\n${LINT_OUTPUT}\n```")
+        slackSend(color: '#e987f1', message: "Ansible Lint\n```${LINT_OUTPUT}```")
       }
     }
 
