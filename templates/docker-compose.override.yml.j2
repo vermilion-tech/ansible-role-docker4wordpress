@@ -2,9 +2,7 @@ version: "3"
 
 services:
   php:
-    image: wodby/wordpress:$WORDPRESS_TAG
-    environment:
-      PHP_FPM_CLEAR_ENV: "no"
+    image: wodby/wordpress-php:$PHP_TAG
     volumes:
       - {{ codebase_volume_path }}
 
