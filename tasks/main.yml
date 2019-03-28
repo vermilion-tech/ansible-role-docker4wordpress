@@ -14,10 +14,6 @@
     version: "{{ docker4wordpress.version }}"
     update: no
 
-- name: Import Codebase
-  import_tasks: codebaseimport.yml
-  when: codebase.import
-
 - name: Create .env from template
   template:
     src: .env.j2
@@ -47,9 +43,13 @@
     state: present
     services: "{{ startup_services }}"
 
-- name: Create WP Config
-  import_tasks: createwpconfig.yml
+- name: Import Codebase
+  import_tasks: codebaseimport.yml
+  when: codebase.import
 
 - name: Import Database Backup
   import_tasks: dbimport.yml
   when: mariadb.import
+
+- name: Create WP Config
+  import_tasks: createwpconfig.yml
