@@ -10,3 +10,5 @@
       --dbuser={{ mariadb_cfg.user }} \
       --dbpass={{ mariadb_cfg.password }} \
       --dbhost={{ mariadb_cfg.host }}
+  args:
+    chdir: "{{ project.path }}"
