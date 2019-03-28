@@ -18,17 +18,6 @@
   args:
     chdir: "{{ project_path }}"
 
-- name: Ensure Database doesn't exist
-  shell: \
-    docker-compose exec \
-      -T {{ mariadb_service_name }} \
-      mysql \
-      -u root \
-      -p{{ mariadb_root_password }} \
-      -e "DROP DATABASE IF EXISTS {{ mariadb_db_name }}"
-  args:
-    chdir: "{{ project_path }}"
-
 - name: Import Database Backup
   block:
     - name: Download Backup from S3
