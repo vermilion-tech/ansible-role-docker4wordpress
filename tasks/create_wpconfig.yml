@@ -19,9 +19,9 @@
   shell: |
     docker-compose exec \
     -T php \
-    wp config set WP_HOME {{ project_base_url }} &&\
+    wp config set WP_HOME https://{{ project_base_url }} &&\
     docker-compose exec \
     -T php \
-    wp config set WP_SITEURL {{ project_base_url }}
+    wp config set WP_SITEURL https://{{ project_base_url }}
   args:
     chdir: "{{ project_path }}"
