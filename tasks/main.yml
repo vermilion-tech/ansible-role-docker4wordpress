@@ -1,55 +1,25 @@
 ---
 # tasks file for docker4wordpress
 
-- name: Stop docker4wordpress services
-  docker_service:
-    project_src: "{{ project_path }}"
-    state: absent
-  ignore_errors: yes
+- name: Initialize Environment
+  import_tasks: init.yml
 
-- name: Clone docker4wordpress repository
-  git:
-    repo: "{{ docker4wordpress_repo }}"
-    dest: "{{ project_path }}"
-    version: "{{ docker4wordpress_version }}"
-    update: no
+- name: Create Templates
+  import_tasks: create_templates.yml
 
-- name: Create .env from template
-  template:
-    src: .env.j2
-    dest: "{{ project_path }}/.env"
-    owner: root
-    group: root
-    mode: 0600
-
-- name: Create docker-compose.override.yml from template
-  template:
-    src: docker-compose.override.yml.j2
-    dest: "{{ project_path }}/docker-compose.override.yml"
-    owner: root
-    group: root
-
-- name: Create Traefik network
-  docker_network:
-    name: "{{ traefik_network }}"
-
-- name: Copy mariadb variable to mariadb_cfg variable
-  set_fact:
-    mariadb_cfg: "{{ mariadb }}"
-
-- name: Startup docker4wordpress services
-  docker_service:
-    project_src: "{{ project_path }}"
-    state: present
-    services: "{{ startup_services }}"
+- name: Start Services
+  import_tasks: start_services.yml
 
 - name: Import Codebase
-  import_tasks: codebaseimport.yml
+  import_tasks: import_codebase.yml
   when: codebase_import
 
 - name: Import Database Backup
-  import_tasks: dbimport.yml
+  import_tasks: import_database.yml
   when: mariadb_import
 
-- name: Create WP Config
-  import_tasks: createwpconfig.yml
+- name: Create Wordpress configuration file
+  import_tasks: create_wpconfig.yml
+
+- name: Restart Services
+  import_tasks: restart_services.yml

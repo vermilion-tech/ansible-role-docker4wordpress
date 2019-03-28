@@ -1,0 +1,8 @@
+---
+#
+
+- name: Start docker4wordpress services
+  docker_service:
+    project_src: "{{ project_path }}"
+    services: "{{ startup_services }}"
+    state: present

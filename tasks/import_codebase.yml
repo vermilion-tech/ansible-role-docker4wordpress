@@ -1,12 +1,12 @@
 ---
 # Clone a codebase from git and install its dependencies
-
 - name: Clone codebase repository
   git:
     repo: "{{ codebase_repo }}"
     dest: "{{ project_path }}/codebase"
     version: "{{ codebase_version }}"
-    update: no
+    update: yes
+    force: yes
 
 - name: Fix codebase permissions
   shell: docker-compose exec -u root php chown -R wodby:wodby /var/www/html
@@ -17,3 +17,6 @@
   shell: docker-compose exec php composer install
   args:
     chdir: "{{ project_path }}"
+
+- name: Restart Services
+  import_tasks: restart_services.yml

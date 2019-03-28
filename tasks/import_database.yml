@@ -1,5 +1,5 @@
 ---
-# Downloads backup from S3 and imports it to MariaDB
+# Download database backup object from S3 and import it into MariaDB
 
 - name: Import Database Backup
   block:
@@ -37,3 +37,6 @@
       file:
         path: "{{ mysqldump_file_path }}"
         state: absent
+
+- name: Restart Services
+  import_tasks: restart_services.yml

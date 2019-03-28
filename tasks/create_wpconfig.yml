@@ -1,5 +1,5 @@
 ---
-# Creates WP configuration file to establish database connection.
+# Create WP configuration file to establish database connection.
 
 - name: Create WP Config
   shell: |
@@ -9,7 +9,8 @@
       --dbname={{ mariadb_db_name }} \
       --dbuser={{ mariadb_user }} \
       --dbpass={{ mariadb_password }} \
-      --dbhost={{ mariadb_service_name }}
+      --dbhost={{ mariadb_service_name }} \
+      --force
   args:
     chdir: "{{ project_path }}"
   ignore_errors: true
