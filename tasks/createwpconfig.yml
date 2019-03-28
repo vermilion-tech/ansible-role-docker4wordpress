@@ -4,9 +4,9 @@
 - name: Create WP Config
   shell: |
     docker-compose exec \
-      -T php \
-      wp config create \
-      --dbname={{ mariadb_cfg.db_name } \
+    -T php \
+    wp config create \
+      --dbname={{ mariadb_cfg.db_name }} \
       --dbuser={{ mariadb_cfg.user }} \
       --dbpass={{ mariadb_cfg.password }} \
       --dbhost={{ mariadb_cfg.host }}
