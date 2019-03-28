@@ -7,4 +7,4 @@
     dest: "{{ project.path }}/codebase"
     version: "{{ codebase.version }}"
     update: no
-  when: codebase.repo is defined
+  when: codebase.repo != ""
