@@ -16,7 +16,7 @@
 
 - name: Import Codebase
   import_tasks: codebaseimport.yml
-  when: codebase.repo != ""
+  when: codebase.repo | length
 
 - name: Create .env from template
   template:
@@ -49,4 +49,4 @@
 
 - name: Import Database Backup
   import_tasks: dbimport.yml
-  when: mysqldump_file_name != ""
+  when: mysqldump_file_name | length
