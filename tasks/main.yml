@@ -15,7 +15,8 @@
     update: no
 
 - name: Debug MariaDB
-  debug: "{{ mariadb }}"
+  debug:
+    msg: "{{ mariadb }}"
 
 - name: Create .env from template
   template:
