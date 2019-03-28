@@ -47,6 +47,9 @@
     state: present
     services: "{{ startup_services }}"
 
+- name: Create WP Config
+  import_tasks: createwpconfig.yml
+
 - name: Import Database Backup
   import_tasks: dbimport.yml
   when: mariadb.import
