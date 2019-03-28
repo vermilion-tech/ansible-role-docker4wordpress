@@ -37,4 +37,3 @@
       file:
         path: "{{ mysqldump_file_path }}"
         state: absent
-  when: mysqldump_file_name != ""
