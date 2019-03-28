@@ -15,17 +15,6 @@ pipeline {
       }
     }
 
-    stage('Lint Ansible Role') {
-      agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
-      steps {
-        sh 'pip install ansible-lint'
-        script {
-          LINT_OUTPUT = sh(script: "ansible-lint . || true", returnStdout: true)
-        }
-        slackSend(color: '#e987f1', message: "Ansible Lint\n```${LINT_OUTPUT}```")
-      }
-    }
-
     stage('Import Ansible Role') {
       agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
       steps {
