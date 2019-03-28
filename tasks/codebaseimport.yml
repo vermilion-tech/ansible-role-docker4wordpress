@@ -1,0 +1,10 @@
+---
+# Clone a codebase from git and install its dependencies
+
+- name: Clone codebase repository
+  git:
+    repo: "{{ codebase.repo }}"
+    dest: "{{ project.path }}/codebase"
+    version: "{{ cobebase.version }}"
+    update: no
+  when: codebase.repo is defined

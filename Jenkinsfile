@@ -18,13 +18,18 @@ pipeline {
     stage('Import Ansible Role') {
       agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
       steps {
+        sh 'pip install ansible-lint'
+        script {
+          LINT_OUTPUT = sh(script: "ansible-lint .", returnStdout: true)
+        }
+        slackSend(color: '#e987f1', message: "Ansible Lint\n```${LINT_OUTPUT}```")
         withCredentials([string(credentialsId: "ansible-galaxy-pat", variable: "GITHUB_PAT")]) {
           sh 'ansible-galaxy login --github-token $GITHUB_PAT'
           script {
-            IMPORT_STATUS = sh(script: "ansible-galaxy import vermilion-tech ansible-role-docker4wordpress", returnStdout: true)
+            IMPORT_OUTPUT = sh(script: "ansible-galaxy import vermilion-tech ansible-role-docker4wordpress", returnStdout: true)
           }
         }
-        slackSend(color: '#d577dd', message: "Ansible-Galaxy Role Imported\n```${IMPORT_STATUS}```")
+        slackSend(color: '#d577dd', message: "Ansible-Galaxy Role Imported\n```${IMPORT_OUTPUT}```")
       }
     }
   }

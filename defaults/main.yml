@@ -3,6 +3,10 @@
 
 description: example
 
+codebase:
+  repo:
+  version:
+
 docker4wordpress:
   repo: https://github.com/wodby/docker4wordpress.git
   version: 5.4.3

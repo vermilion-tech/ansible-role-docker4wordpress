@@ -1,0 +1,33 @@
+---
+# Downloads backup from S3 and imports it to MariaDB
+
+- name: Import Database Backup
+  block:
+    - name: Download Backup from S3
+      aws_s3:
+        aws_access_key: "{{ spaces_access_key }}"
+        aws_secret_key: "{{ spaces_secret_key }}"
+        s3_url: "{{ spaces_endpoint }}"
+        bucket: "{{ space_name }}"
+
+        object: "{{ space_file_path }}"
+        dest: "{{ mysqldump_file_path }}"
+
+        encrypt: false
+        rgw: true
+        mode: get
+
+    - name: Wait 30 seconds for Mariadb to initialize.
+      pause:
+        seconds: 30
+
+    - name: Use docker compose to import a mysqldump on the database service
+      shell: docker-compose exec -T {{ mariadb_cfg.service_name }} mysql -u root -p{{ mariadb_cfg.root_password }} {{ mariadb_cfg.db_name }} < {{ mysqldump_file_path }}
+      args:
+        chdir: "{{ project.path }}"
+  always:
+    - name: Delete Temporary Backup
+      file:
+        path: "{{ mysqldump_file_path }}"
+        state: absent
+  when: mysqldump_file_name is defined
