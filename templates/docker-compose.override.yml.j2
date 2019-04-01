@@ -27,8 +27,13 @@ services:
       - '{{ traefik_http_port }}:80'
       - '{{ traefik_https_port}}:443'
 
+  mariadb:
+    volumes:
+      - database:/var/lib/mysql
+
 volumes:
   codebase:
+  database:
 
 networks:
   default:
