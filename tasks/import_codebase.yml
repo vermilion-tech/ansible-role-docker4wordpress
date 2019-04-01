@@ -14,6 +14,13 @@
     update: yes
     force: yes
 
+- name: Restart php service
+  docker_service:
+    project_src: "{{ project_path }}"
+    state: present
+    restarted: yes
+    services: php
+
 - name: Fix codebase permissions
   shell: docker-compose exec -u root php chown -R wodby:wodby /var/www/html
   args:
