@@ -1,25 +1,32 @@
 ---
 # tasks file for docker4wordpress
 
-- name: Initialize Environment
-  import_tasks: init.yml
+- name: Stop Docker Services
+  import_tasks: stop_services.yml
 
-- name: Create Templates
-  import_tasks: create_templates.yml
+- name: Clone docker4wordpress repository
+  import_tasks: clone_docker4wordpress.yml
 
-- name: Start Services
+- name: Create .env and docker-compose.override.yml templates
+  imports_tasks: create_templates.yml
+
+- name: Start Docker Services
   import_tasks: start_services.yml
 
-- name: Import Codebase
+- name: Import Wordpress codebase
   import_tasks: import_codebase.yml
   when: codebase_import
 
-- name: Import Database Backup
+- name: Import Wordpress database
   import_tasks: import_database.yml
   when: mariadb_import
 
 - name: Create Wordpress configuration file
   import_tasks: create_wpconfig.yml
 
-- name: Restart Services
-  import_tasks: restart_services.yml
+- name: Restart docker4wordpress services
+  docker_service:
+    project_src: "{{ project_path }}"
+    services: "{{ startup_services }}"
+    state: present
+    restarted: yes

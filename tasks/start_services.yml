@@ -1,8 +1,13 @@
 ---
 #
 
-- name: Start docker4wordpress services
-  docker_service:
-    project_src: "{{ project_path }}"
-    services: "{{ startup_services }}"
-    state: present
+- name: Start docker4wordpress services and await initialization
+  block:
+    - name: Start docker4wordpress services
+      docker_service:
+        project_src: "{{ project_path }}"
+        services: "{{ startup_services }}"
+        state: present
+    - name: Wait 15 seconds for MariaDB to initialize.
+      pause:
+        seconds: 15

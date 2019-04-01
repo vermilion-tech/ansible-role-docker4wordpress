@@ -1,11 +1,6 @@
 ---
 # Clone a codebase from git and install its dependencies
 
-- name: Delete existing codebase repository
-  file:
-    path: "{{ project_path }}/codebase"
-    state: absent
-
 - name: Clone codebase repository
   git:
     repo: "{{ codebase_repo }}"
@@ -14,7 +9,7 @@
     update: yes
     force: yes
 
-- name: Restart php service
+- name: Restart PHP service
   docker_service:
     project_src: "{{ project_path }}"
     state: present
@@ -30,6 +25,3 @@
   shell: docker-compose exec php composer install
   args:
     chdir: "{{ project_path }}"
-
-- name: Restart Services
-  import_tasks: restart_services.yml

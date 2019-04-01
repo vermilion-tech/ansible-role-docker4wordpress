@@ -1,0 +1,13 @@
+---
+#
+
+- name: Check if docker-compose.yml exists in project path
+  stat:
+    path: "{{ project_path }}/docker-compose.yml"
+  register: docker_compose_file
+
+- name: Bring down Docker services if docker-compose.yml exists in project path
+  docker_service:
+    project_src: "{{ project_path }}"
+    state: absent
+  when: docker_compose_file.stat.exists

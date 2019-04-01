@@ -1,0 +1,9 @@
+---
+#
+
+- name: Clone docker4wordpress repository
+  git:
+    repo: "{{ docker4wordpress_repo }}"
+    dest: "{{ project_path }}"
+    version: "{{ docker4wordpress_version }}"
+    update: no

@@ -1,26 +1,9 @@
 ---
 # Download database backup object from S3 and import it into MariaDB
 
-- name: Reset Database
-  shell: \
-    docker-compose exec \
-      -T {{ mariadb_service_name }} \
-      mysql \
-      -u root \
-      -p{{ mariadb_root_password }} \
-      -e "DROP DATABASE IF EXISTS {{ mariadb_db_name }}" && \
-    docker-compose exec \
-      -T {{ mariadb_service_name }} \
-      mysql \
-      -u root \
-      -p{{ mariadb_root_password }} \
-      -e "CREATE DATABASE {{ mariadb_db_name }}"
-  args:
-    chdir: "{{ project_path }}"
-
-- name: Import Database Backup
+- name: Import database backup
   block:
-    - name: Download Backup from S3
+    - name: Download backup from S3
       aws_s3:
         aws_access_key: "{{ spaces_access_key }}"
         aws_secret_key: "{{ spaces_secret_key }}"
@@ -34,11 +17,24 @@
         rgw: true
         mode: get
 
-    - name: Wait 30 seconds for Mariadb to initialize.
-      pause:
-        seconds: 30
+    - name: Reset target database
+      shell: \
+        docker-compose exec \
+          -T {{ mariadb_service_name }} \
+          mysql \
+          -u root \
+          -p{{ mariadb_root_password }} \
+          -e "DROP DATABASE IF EXISTS {{ mariadb_db_name }}" && \
+        docker-compose exec \
+          -T {{ mariadb_service_name }} \
+          mysql \
+          -u root \
+          -p{{ mariadb_root_password }} \
+          -e "CREATE DATABASE {{ mariadb_db_name }}"
+      args:
+        chdir: "{{ project_path }}"
 
-    - name: Use docker compose to import a mysqldump on the database service
+    - name: Use Docker Compose to import mysqldump on the database service
       shell: |
         docker-compose exec \
           -T {{ mariadb_service_name }} \
@@ -50,10 +46,7 @@
       args:
         chdir: "{{ project_path }}"
   always:
-    - name: Delete Temporary Backup
+    - name: Delete temporary backup
       file:
         path: "{{ mysqldump_file_path }}"
         state: absent
-
-- name: Restart Services
-  import_tasks: restart_services.yml
