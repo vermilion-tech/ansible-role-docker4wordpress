@@ -1,5 +1,11 @@
 ---
 # Clone a codebase from git and install its dependencies
+
+- name: Delete existing codebase repository
+  file:
+    path: "{{ project_path }}/codebase"
+    state: absent
+
 - name: Clone codebase repository
   git:
     repo: "{{ codebase_repo }}"
