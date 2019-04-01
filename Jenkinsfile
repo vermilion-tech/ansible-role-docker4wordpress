@@ -27,7 +27,12 @@ pipeline {
     }
 
     stage('Import Ansible Role') {
-      when { branch 'master' || branch 'development' }
+      when {
+        anyOf {
+          branch 'master';
+          branch 'development'
+        }
+      }
       agent { docker { image 'williamyeh/ansible:ubuntu18.04'} }
       steps {
         withCredentials([string(credentialsId: "ansible-galaxy-pat", variable: "GITHUB_PAT")]) {
