@@ -8,7 +8,7 @@
   import_tasks: clone_docker4wordpress.yml
 
 - name: Create .env and docker-compose.override.yml templates
-  imports_tasks: create_templates.yml
+  import_tasks: create_templates.yml
 
 - name: Start Docker Services
   import_tasks: start_services.yml
