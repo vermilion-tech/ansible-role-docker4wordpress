@@ -4,32 +4,32 @@
 - name: Backup Docker Services
   import_tasks: backup_services.yml
 
-- name: Stop Docker Services
-  import_tasks: stop_services.yml
-
-- name: Clone docker4wordpress repository
-  import_tasks: clone_docker4wordpress.yml
-
-- name: Create .env and docker-compose.override.yml templates
-  import_tasks: create_templates.yml
-
-- name: Start Docker Services
-  import_tasks: start_services.yml
-
-- name: Import Wordpress codebase
-  import_tasks: import_codebase.yml
-  when: codebase_import
-
-- name: Import Wordpress database
-  import_tasks: import_database.yml
-  when: mariadb_import
-
-- name: Create Wordpress configuration file
-  import_tasks: create_wpconfig.yml
-
-- name: Restart docker4wordpress services
-  docker_service:
-    project_src: "{{ project_path }}"
-    services: "{{ startup_services }}"
-    state: present
-    restarted: yes
+# - name: Stop Docker Services
+#   import_tasks: stop_services.yml
+#
+# - name: Clone docker4wordpress repository
+#   import_tasks: clone_docker4wordpress.yml
+#
+# - name: Create .env and docker-compose.override.yml templates
+#   import_tasks: create_templates.yml
+#
+# - name: Start Docker Services
+#   import_tasks: start_services.yml
+#
+# - name: Import Wordpress codebase
+#   import_tasks: import_codebase.yml
+#   when: codebase_import
+#
+# - name: Import Wordpress database
+#   import_tasks: import_database.yml
+#   when: mariadb_import
+#
+# - name: Create Wordpress configuration file
+#   import_tasks: create_wpconfig.yml
+#
+# - name: Restart docker4wordpress services
+#   docker_service:
+#     project_src: "{{ project_path }}"
+#     services: "{{ startup_services }}"
+#     state: present
+#     restarted: yes

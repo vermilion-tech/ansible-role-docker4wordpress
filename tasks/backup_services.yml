@@ -1,7 +1,7 @@
 ---
 # Download database backup object from S3 and import it into MariaDB
 
-- name: Backup Database
+- name: Backup Docker Services
   block:
     - name: Use Docker Compose to import mysqldump on the database service
       shell: |
@@ -17,11 +17,6 @@
         chdir: "{{ project_path }}"
     - name: Upload mysqldump to S3
       aws_s3:
-        aws_access_key: "{{ spaces_access_key }}"
-        aws_secret_key: "{{ spaces_secret_key }}"
-        s3_url: "{{ spaces_endpoint }}"
-        bucket: "{{ space_name }}"
-
         object: "{{ space_file_path }}"
         src: "{{ mysqldump_file_path }}"
 
@@ -29,29 +24,29 @@
         rgw: true
         mode: put
 
-    - name: Create archive of codebase
-      archive:
-        path: "{{ project_path }}/codebase"
-        dest: "{{ project_path }}/codebase.tgz"
-    - name: Upload archive of codebase to S3
-      aws_s3:
-        aws_access_key: "{{ spaces_access_key }}"
-        aws_secret_key: "{{ spaces_secret_key }}"
-        s3_url: "{{ spaces_endpoint }}"
-        bucket: "{{ space_name }}"
-
-        object: "{{ space_folder }}/codebase.tgz"
-        src: "{{ project_path }}/codebase.tgz"
-
-        encrypt: false
-        rgw: true
-        mode: put
+    # - name: Create archive of codebase
+    #   archive:
+    #     path: "{{ project_path }}/codebase"
+    #     dest: "{{ project_path }}/codebase.tgz"
+    # - name: Upload archive of codebase to S3
+    #   aws_s3:
+    #     aws_access_key: "{{ spaces_access_key }}"
+    #     aws_secret_key: "{{ spaces_secret_key }}"
+    #     s3_url: "{{ spaces_endpoint }}"
+    #     bucket: "{{ space_name }}"
+    #
+    #     object: "{{ space_folder }}/codebase.tgz"
+    #     src: "{{ project_path }}/codebase.tgz"
+    #
+    #     encrypt: false
+    #     rgw: true
+    #     mode: put
   always:
     - name: Delete mysqldump
       file:
         path: "{{ mysqldump_file_path }}"
         state: absent
-    - name: Delete codebase archive
-      file:
-        path: "{{ project_path }}/codebase.tgz"
-        state: absent
+    # - name: Delete codebase archive
+    #   file:
+    #     path: "{{ project_path }}/codebase.tgz"
+    #     state: absent
