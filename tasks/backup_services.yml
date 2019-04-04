@@ -20,6 +20,7 @@
         object: "{{ space_file_path }}"
         src: "{{ mysqldump_file_path }}"
         bucket: "{{ bucket }}"
+        s3_url: "{{ s3_url }}"
 
         encrypt: false
         rgw: true
