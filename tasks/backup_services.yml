@@ -19,6 +19,7 @@
       aws_s3:
         object: "{{ space_file_path }}"
         src: "{{ mysqldump_file_path }}"
+        bucket: "{{ bucket }}"
 
         encrypt: false
         rgw: true
