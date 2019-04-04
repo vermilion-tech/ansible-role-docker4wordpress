@@ -1,6 +1,9 @@
 ---
 # tasks file for docker4wordpress
 
+- name: Backup Docker Services
+  import_tasks: backup_services.yml
+
 - name: Stop Docker Services
   import_tasks: stop_services.yml
 
