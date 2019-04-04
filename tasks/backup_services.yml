@@ -8,6 +8,7 @@
         docker-compose exec \
           -T {{ mariadb_service_name }} \
           mysqldump \
+          --single-transaction \
           -u root \
           -p{{ mariadb_root_password }} \
           {{ mariadb_db_name }} \

@@ -6,6 +6,8 @@ pipeline {
       returnStdout: true,
       script: "git --no-pager log --format='medium' -1 ${GIT_COMMIT}"
     )}"""
+
+    ANSIBLE_REPO = "vermilion-tech ansible-role-docker4wordpress"
   }
 
   stages {
@@ -38,7 +40,7 @@ pipeline {
         withCredentials([string(credentialsId: "ansible-galaxy-pat", variable: "GITHUB_PAT")]) {
           sh 'ansible-galaxy login --github-token $GITHUB_PAT'
           script {
-            IMPORT_OUTPUT = sh(script: "ansible-galaxy import --branch ${GIT_BRANCH} vermilion-tech ansible-role-docker4wordpress", returnStdout: true)
+            IMPORT_OUTPUT = sh(script: "ansible-galaxy import --branch ${GIT_BRANCH} ${ANSIBLE_REPO}", returnStdout: true)
           }
         }
         slackSend(color: '#d577dd', message: "Ansible-Galaxy Role Imported\n```${IMPORT_OUTPUT}```")
