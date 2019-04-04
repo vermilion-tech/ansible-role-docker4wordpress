@@ -1,6 +1,9 @@
 ---
 # tasks file for docker4wordpress
 
+- name: Set Facts
+  import_tasks: set_facts.yml
+
 - name: Backup Docker Services
   import_tasks: backup_services.yml
 
