@@ -1,8 +1,2 @@
 ---
 # Sets facts
-- name: Set Facts
-  set_fact:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    bucket: "{{ bucket }}"
-    s3_url: "{{ s3_url }}"

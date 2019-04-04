@@ -1,6 +1,13 @@
 ---
 # Download database backup object from S3 and import it into MariaDB
 
+- name: Set Facts
+  set_fact:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ bucket }}"
+    s3_url: "{{ s3_url }}"
+
 - name: Backup Docker Services
   block:
     - name: Use Docker Compose to import mysqldump on the database service
@@ -15,6 +22,8 @@
           > {{ mysqldump_file_path }}
       args:
         chdir: "{{ project_path }}"
+    - name: debug
+      debug: var=ansible_facts
     - name: Upload mysqldump to S3
       aws_s3:
         object: "{{ space_file_path }}"
