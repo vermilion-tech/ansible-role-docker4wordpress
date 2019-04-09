@@ -55,3 +55,7 @@
       file:
         path: "{{ project_path }}/codebase.tgz"
         state: absent
+  rescue:
+    - name: Debug Message
+      debug:
+        msg: Error in backup tasks, most likely because services don't exist yet
